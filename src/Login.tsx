@@ -13,6 +13,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,8 +37,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface LoginFormInput {
+  username: string;
+  password: string;
+}
+
 export default function Login(): JSX.Element {
   const classes = useStyles();
+  const loginSchema = yup.object().shape({
+    password: yup.string().required(),
+    username: yup.string().required(),
+  });
+
+  const { register, handleSubmit, errors } = useForm<LoginFormInput>({
+    resolver: yupResolver(loginSchema),
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -47,7 +63,13 @@ export default function Login(): JSX.Element {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmit((form) => {
+            console.log(form);
+          })}
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -58,6 +80,9 @@ export default function Login(): JSX.Element {
             name="username"
             autoComplete="username"
             autoFocus
+            inputRef={register}
+            error={errors.username ? true : false}
+            helperText={errors.username ? errors.username.message : ""}
           />
           <TextField
             variant="outlined"
@@ -69,6 +94,9 @@ export default function Login(): JSX.Element {
             type="password"
             id="password"
             autoComplete="current-password"
+            inputRef={register}
+            error={errors.password ? true : false}
+            helperText={errors.password ? errors.password.message : ""}
           />
           <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
