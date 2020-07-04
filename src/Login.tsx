@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -53,10 +53,10 @@ export default function Login(): JSX.Element {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username or Email"
+            name="username"
+            autoComplete="username"
             autoFocus
           />
           <TextField
@@ -81,8 +81,8 @@ export default function Login(): JSX.Element {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link href="/register" variant="body2">
+                {"Register"}
               </Link>
             </Grid>
           </Grid>
