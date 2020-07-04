@@ -11,6 +11,16 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers";
+
+interface RegFormInput {
+  username: string;
+  name: string;
+  email: string;
+  password: string;
+}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,6 +44,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register(): JSX.Element {
   const classes = useStyles();
+  const registerSchema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(6).max(30).required(),
+    name: yup.string().notRequired(),
+    username: yup.string().min(2).max(30).required(),
+  });
+
+  const { register, handleSubmit, errors } = useForm<RegFormInput>({
+    resolver: yupResolver(registerSchema),
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -45,29 +65,40 @@ export default function Register(): JSX.Element {
         <Typography component="h1" variant="h5">
           Register new account
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          noValidate
+          className={classes.form}
+          onSubmit={handleSubmit((form) => {
+            console.log(form);
+          })}
+        >
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
+                id="username"
+                label="User name"
+                name="username"
+                autoComplete="username"
+                inputRef={register}
+                error={errors.username ? true : false}
+                helperText={errors.username ? errors.username.message : ""}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                id="realname"
+                label="Real name"
+                name="name"
+                autoComplete="name"
+                inputRef={register}
+                error={errors.name ? true : false}
+                helperText={errors.name ? errors.name.message : ""}
               />
             </Grid>
             <Grid item xs={12}>
@@ -76,9 +107,12 @@ export default function Register(): JSX.Element {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
+                inputRef={register}
+                error={errors.email ? true : false}
+                helperText={errors.email ? errors.email.message : ""}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,6 +125,9 @@ export default function Register(): JSX.Element {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                inputRef={register}
+                error={errors.password ? true : false}
+                helperText={errors.password ? errors.password.message : ""}
               />
             </Grid>
           </Grid>
