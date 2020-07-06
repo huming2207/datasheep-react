@@ -1,6 +1,8 @@
+import qs from "qs";
 import { LocalStorageJwt, EncodedFormConfig } from "./constant";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import qs from "qs";
+import { LoginFormInput } from "../schemas/LoginForm";
+import { RegFormInput } from "../schemas/RegisterForm";
 
 export const loginWithJwt = (): AxiosRequestConfig => {
   const token = localStorage.getItem(LocalStorageJwt);
@@ -14,15 +16,8 @@ export const loginWithJwt = (): AxiosRequestConfig => {
   return {};
 };
 
-export const loginUser = async (username: string, password: string): Promise<AxiosResponse> => {
-  const resp = await axios.post(
-    "/api/auth/login",
-    qs.stringify({
-      username,
-      password,
-    }),
-    EncodedFormConfig,
-  );
+export const loginUser = async (input: LoginFormInput): Promise<AxiosResponse> => {
+  const resp = await axios.post("/api/auth/login", qs.stringify(input), EncodedFormConfig);
 
   const { token } = resp.data.data;
   console.log(token);
@@ -30,14 +25,6 @@ export const loginUser = async (username: string, password: string): Promise<Axi
   return resp;
 };
 
-export const registerUser = async (username: string, password: string, email: string): Promise<AxiosResponse> => {
-  return axios.post(
-    "/api/auth/register",
-    qs.stringify({
-      username,
-      password,
-      email,
-    }),
-    EncodedFormConfig,
-  );
+export const registerUser = async (input: RegFormInput): Promise<AxiosResponse> => {
+  return axios.post("/api/auth/register", qs.stringify(input), EncodedFormConfig);
 };

@@ -12,15 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers";
-
-interface RegFormInput {
-  username: string;
-  name: string;
-  email: string;
-  password: string;
-}
+import { RegFormInput, RegFormSchema } from "../schemas/RegisterForm";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,15 +37,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register(): JSX.Element {
   const classes = useStyles();
-  const registerSchema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().min(6).max(30).required(),
-    name: yup.string().notRequired(),
-    username: yup.string().min(2).max(30).required(),
-  });
 
   const { register, handleSubmit, errors } = useForm<RegFormInput>({
-    resolver: yupResolver(registerSchema),
+    resolver: yupResolver(RegFormSchema),
   });
 
   return (

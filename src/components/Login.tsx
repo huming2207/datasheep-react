@@ -13,9 +13,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
+import { LoginFormInput, LoginFormSchema } from "../schemas/LoginForm";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,20 +37,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface LoginFormInput {
-  username: string;
-  password: string;
-}
-
 export default function Login(): JSX.Element {
   const classes = useStyles();
-  const loginSchema = yup.object().shape({
-    password: yup.string().required(),
-    username: yup.string().required(),
-  });
 
   const { register, handleSubmit, errors } = useForm<LoginFormInput>({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(LoginFormSchema),
   });
 
   return (
