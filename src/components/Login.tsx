@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "./Footer";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -16,6 +16,8 @@ import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import { LoginFormInput, LoginFormSchema } from "../schemas/LoginForm";
+import { loginUser } from "../api/auth";
+import ErrorDialog from "./ErrorDialog";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,6 +46,8 @@ export default function Login(): JSX.Element {
     resolver: yupResolver(LoginFormSchema),
   });
 
+  const [state, setState] = useState(null);
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -57,8 +61,13 @@ export default function Login(): JSX.Element {
         <form
           className={classes.form}
           noValidate
-          onSubmit={handleSubmit((form) => {
-            console.log(form);
+          onSubmit={handleSubmit(async (form) => {
+            try {
+              await loginUser(form);
+            } catch (error) {
+              console.log("oops");
+              setState(error);
+            }
           })}
         >
           <TextField
@@ -101,12 +110,13 @@ export default function Login(): JSX.Element {
             </Grid>
             <Grid item>
               <Link href="/register" variant="body2">
-                {"Register"}
+                Register
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
+      <ErrorDialog error={state} />
       <Box mt={8}>
         <Footer />
       </Box>
