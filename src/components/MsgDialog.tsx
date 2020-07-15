@@ -6,29 +6,32 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-export interface ErrorDialogProps {
-  error: any | null;
+export interface MsgDialogData {
+  title: string;
+  content: string;
 }
 
-export default function ErrorDialog(props: ErrorDialogProps): JSX.Element {
-  const [error, setError] = useState(props.error);
+interface MsgDialogProps {
+  data: MsgDialogData | null;
+}
+
+export default function MsgDialog(props: MsgDialogProps): JSX.Element {
+  const [msg, setMsg] = useState<MsgDialogData | null>(props.data);
 
   useEffect(() => {
-    setError(props.error);
-  }, [props.error]);
+    setMsg(props.data);
+  }, [props.data]);
 
   const handleClose = () => {
-    setError(null);
+    setMsg(null);
   };
-
-  const message = (props.error ? props.error.message : "") || "Unknown error";
 
   return (
     <div>
-      <Dialog open={error !== null} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-        <DialogTitle id="alert-dialog-title">Oops</DialogTitle>
+      <Dialog open={msg !== null} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">{msg?.title}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">{message}</DialogContentText>
+          <DialogContentText id="alert-dialog-description">{msg?.content}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary" autoFocus>

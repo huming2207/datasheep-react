@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import { LoginFormInput, LoginFormSchema } from "../schemas/LoginForm";
 import { loginUser } from "../api/auth";
-import ErrorDialog from "./ErrorDialog";
+import MsgDialog, { MsgDialogData } from "./MsgDialog";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,7 +46,7 @@ export default function Login(): JSX.Element {
     resolver: yupResolver(LoginFormSchema),
   });
 
-  const [state, setState] = useState(null);
+  const [msg, setMsg] = useState<MsgDialogData | null>(null);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -66,7 +66,11 @@ export default function Login(): JSX.Element {
               await loginUser(form);
             } catch (error) {
               console.log("oops");
-              setState(error);
+              const data: MsgDialogData = {
+                title: "Failed when registering",
+                content: error.message || "Unknown error",
+              };
+              setMsg(data);
             }
           })}
         >
@@ -116,7 +120,7 @@ export default function Login(): JSX.Element {
           </Grid>
         </form>
       </div>
-      <ErrorDialog error={state} />
+      <MsgDialog data={msg} />
       <Box mt={8}>
         <Footer />
       </Box>

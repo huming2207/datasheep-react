@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "./Footer";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -14,6 +14,8 @@ import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import { RegFormInput, RegFormSchema } from "../schemas/RegisterForm";
+import MsgDialog, { MsgDialogData } from "./MsgDialog";
+import { registerUser } from "../api/auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,6 +44,8 @@ export default function Register(): JSX.Element {
     resolver: yupResolver(RegFormSchema),
   });
 
+  const [msg, setMsg] = useState<MsgDialogData | null>(null);
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -55,8 +59,22 @@ export default function Register(): JSX.Element {
         <form
           noValidate
           className={classes.form}
-          onSubmit={handleSubmit((form) => {
-            console.log(form);
+          onSubmit={handleSubmit(async (form) => {
+            try {
+              const result = await registerUser(form);
+              const data: MsgDialogData = {
+                title: "User created",
+                content: result.data.message || "Unknown state",
+              };
+              setMsg(data);
+            } catch (error) {
+              console.log("oops");
+              const data: MsgDialogData = {
+                title: "Failed when registering",
+                content: error.message || "Unknown error",
+              };
+              setMsg(data);
+            }
           })}
         >
           <Grid container spacing={2}>
@@ -130,6 +148,7 @@ export default function Register(): JSX.Element {
           </Grid>
         </form>
       </div>
+      <MsgDialog data={msg} />
       <Box mt={5}>
         <Footer />
       </Box>
