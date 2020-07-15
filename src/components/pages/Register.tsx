@@ -47,7 +47,7 @@ export default function Register(): JSX.Element {
   const [msg, setMsg] = useState<MsgDialogData | null>(null);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
