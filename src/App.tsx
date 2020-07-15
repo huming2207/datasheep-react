@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./components/pages/Login";
+import Register from "./components/pages/Register";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core";
 
 const theme = createMuiTheme({

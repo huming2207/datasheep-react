@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Footer from "./Footer";
+import Footer from "../common/Footer";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,9 +13,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
-import { RegFormInput, RegFormSchema } from "../schemas/RegisterForm";
-import MsgDialog, { MsgDialogData } from "./MsgDialog";
-import { registerUser } from "../api/auth";
+import { RegFormInput, RegFormSchema } from "../../schemas/RegisterForm";
+import MsgDialog, { MsgDialogData } from "../common/MsgDialog";
+import { registerUser } from "../../api/auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
