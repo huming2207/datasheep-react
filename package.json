@@ -46,7 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@types/qs": "6.9.3",
+    "@types/qs": "6.9.4",
     "@types/react-router-dom": "5.1.5",
     "@types/yup": "0.29.3",
     "@typescript-eslint/eslint-plugin": "3.7.0",
