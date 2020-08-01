@@ -63,6 +63,7 @@ export const KanbanList: React.FC = () => {
 
     const moveCard = useCallback(
       (dragIndex: number, hoverIndex: number) => {
+        console.log("Move started");
         const dragCard = cards[dragIndex];
         setCards(
           update(cards, {
@@ -78,10 +79,7 @@ export const KanbanList: React.FC = () => {
 
     const renderCard = (card: { id: number; text: string; title: string }, index: number) => {
       return (
-        <>
-          <EventCard key={card.id} index={index} id={card.id} text={card.text} title={card.title} moveCard={moveCard} />
-          <Divider variant="inset" component="li" />
-        </>
+        <EventCard key={card.id} index={index} id={card.id} text={card.text} title={card.title} moveCard={moveCard} />
       );
     };
 
