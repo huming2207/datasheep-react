@@ -17,6 +17,7 @@ interface DragItem {
   id: string;
   type: string;
 }
+
 export const EventCard: React.FC<CardProps> = (props: CardProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [, drop] = useDrop({
