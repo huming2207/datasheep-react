@@ -1,17 +1,22 @@
 import React, { useState, useCallback } from "react";
 import update from "immutability-helper";
 import { EventCard } from "./EventCard";
-import { makeStyles, Theme, createStyles, List } from "@material-ui/core";
+import { makeStyles, Theme, createStyles, List, ListSubheader, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
-      maxWidth: "36ch",
-      backgroundColor: theme.palette.background.paper,
+      maxWidth: "40ch",
+      backgroundColor: theme.palette.primary.main,
     },
     inline: {
-      display: "inline",
+      display: "inline-block",
+    },
+    listHeader: {
+      marginTop: "10px",
+      marginBottom: "10px",
+      fontWeight: "bold",
     },
   }),
 );
@@ -83,5 +88,14 @@ export const KanbanList: React.FC = () => {
   };
 
   const classes = useStyles();
-  return <List className={classes.root}>{cards.map((card, i) => renderCard(card, i))}</List>;
+  return (
+    <List className={classes.root}>
+      <ListSubheader>
+        <Typography className={classes.listHeader} variant="h4" component="h2">
+          test
+        </Typography>
+      </ListSubheader>
+      {cards.map((card, i) => renderCard(card, i))}
+    </List>
+  );
 };

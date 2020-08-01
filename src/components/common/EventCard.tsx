@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useDrag, useDrop, DropTargetMonitor } from "react-dnd";
 import { ItemTypes } from "../../misc/ItemTypes";
 import { XYCoord } from "dnd-core";
-import { ListItem, ListItemText, Divider } from "@material-ui/core";
+import { ListItem, makeStyles, Card, CardContent, Typography } from "@material-ui/core";
 
 export interface CardProps {
   id: any;
@@ -17,6 +17,25 @@ interface DragItem {
   id: string;
   type: string;
 }
+
+const useStyles = makeStyles({
+  root: {
+    minWidth: "36ch",
+    backgroundColor: "white",
+    maxWidth: "36ch",
+  },
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
 
 export const EventCard: React.FC<CardProps> = (props: CardProps) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -80,12 +99,23 @@ export const EventCard: React.FC<CardProps> = (props: CardProps) => {
 
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
+
+  const classes = useStyles();
+
   return (
     <div ref={ref}>
       <ListItem alignItems="flex-start" style={{ opacity }}>
-        <ListItemText primary={props.title} secondary={props.text} />
+        <Card className={classes.root}>
+          <CardContent>
+            <Typography variant="h6" component="h5">
+              {props.title}
+            </Typography>
+            <Typography variant="body2" component="p">
+              {props.text}
+            </Typography>
+          </CardContent>
+        </Card>
       </ListItem>
-      <Divider />
     </div>
   );
 };
