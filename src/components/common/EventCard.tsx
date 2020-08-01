@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useDrag, useDrop, DropTargetMonitor } from "react-dnd";
 import { ItemTypes } from "../../misc/ItemTypes";
 import { XYCoord } from "dnd-core";
-import { ListItem, ListItemText } from "@material-ui/core";
+import { ListItem, ListItemText, Divider } from "@material-ui/core";
 
 export interface CardProps {
   id: any;
@@ -81,8 +81,11 @@ export const EventCard: React.FC<CardProps> = (props: CardProps) => {
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
   return (
-    <ListItem alignItems="flex-start" style={{ opacity }}>
-      <ListItemText primary={props.title} secondary={props.text} />
-    </ListItem>
+    <div ref={ref}>
+      <ListItem alignItems="flex-start" style={{ opacity }}>
+        <ListItemText primary={props.title} secondary={props.text} />
+      </ListItem>
+      <Divider />
+    </div>
   );
 };
