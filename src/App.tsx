@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core";
+import { Dashboard } from "./components/pages/Dashboard";
 
 const theme = createMuiTheme({
   palette: {
@@ -29,6 +30,10 @@ function App(): JSX.Element {
           <Route path="/about"></Route>
           <Route path="/register">
             <Register />
+          </Route>
+
+          <Route path="/dashboard">
+            <Dashboard />
           </Route>
 
           {/* If none of the previous routes render anything,
