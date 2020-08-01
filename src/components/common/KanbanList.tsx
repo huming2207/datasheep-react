@@ -8,6 +8,9 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: "100%",
       maxWidth: "40ch",
+      display: "inline-block",
+      marginRight: "15px",
+      marginTop: "15px",
       backgroundColor: theme.palette.primary.main,
     },
     inline: {
