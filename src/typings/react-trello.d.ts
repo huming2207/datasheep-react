@@ -25,7 +25,9 @@ declare module "react-trello" {
     title: string;
     label?: string;
     description?: string;
-    tags: Tag[];
+    draggable?: boolean;
+    tags?: Tag[];
+    metadata?: Record<string, unknown>;
   }
 
   export declare const Card: React.ComponentType<CardProps>;
@@ -107,11 +109,14 @@ declare module "react-trello" {
     index?: number;
     currentPage?: number;
     cards?: CardProps[];
-    labelStyle: Record<string, StringPairs | number>;
+    labelStyle?: Record<string, StringPairs | number>;
     label?: string;
   }
 
   export interface BoardData {
     lanes: LaneProps[];
   }
+
+  export declare const Board: React.ComponentType<BoardContainerProps>;
+  export default Board;
 }
