@@ -29,14 +29,12 @@ export default function Dashboard(): JSX.Element {
             metadata: { sha: "be312a1" },
           },
         ],
-        draggable: true,
       },
       {
         id: "lane2",
         title: "Completed",
         label: "0/0",
         cards: [],
-        draggable: true,
       },
     ],
   };
@@ -46,7 +44,7 @@ export default function Dashboard(): JSX.Element {
   return (
     <Container maxWidth="lg">
       <Box className={styleClass.board}>
-        <Board data={data} style={{ backgroundColor: "white" }}></Board>
+        <Board draggable data={data} style={{ backgroundColor: "white" }}></Board>
       </Box>
       <Box mt={5}>
         <Footer />
