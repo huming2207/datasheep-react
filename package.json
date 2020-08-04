@@ -21,7 +21,7 @@
     "react-scripts": "3.4.1",
     "react-trello": "2.2.8",
     "typescript": "3.9.7",
-    "yup": "0.29.2"
+    "yup": "0.29.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -44,7 +44,7 @@
   "devDependencies": {
     "@types/qs": "6.9.4",
     "@types/react-router-dom": "5.1.5",
-    "@types/yup": "0.29.3",
+    "@types/yup": "0.29.4",
     "@typescript-eslint/eslint-plugin": "3.8.0",
     "@types/jest": "26.0.8",
     "@types/node": "12.12.53",
