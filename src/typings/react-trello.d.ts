@@ -38,11 +38,11 @@ declare module "react-trello" {
     srcLaneId: string,
     targetLaneId: string,
     idx: number,
-    card: CommonData | unknown,
+    card: CommonProps,
   ) => boolean;
 
   export type HandleLaneDragStart = (laneId: string) => void;
-  export type HandleLaneDragEnd = (removedIdx: number, addedIdx: number, payload: CommonData | unknown) => void;
+  export type HandleLaneDragEnd = (removedIdx: number, addedIdx: number, payload: CommonProps) => void;
 
   export enum EventType {
     AddCard = "ADD_CARD",
@@ -63,6 +63,7 @@ declare module "react-trello" {
     handleLaneDragEnd?: HandleLaneDragEnd;
     onDataChange?: (data: CommonData) => void;
     onCardMoveAcrossLanes?: (fromLaneId: string, toLaneId: string, cardId: string, index: number) => void;
+    onCardAdd?: (card: CardProps, laneId: string) => void;
     onCardClick?: (cardId: string, metadata: any, laneId: string) => void;
     onBeforeCardDelete?: () => void;
     onCardDelete?: (cardId: string, laneId: string) => void;
