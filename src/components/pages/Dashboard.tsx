@@ -4,6 +4,14 @@ import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Board, { BoardData } from "react-trello";
 import { makeStyles } from "@material-ui/core";
+import {
+  processCardAdd,
+  processLaneAdd,
+  processCardDelete,
+  processLaneDelete,
+  processCardDrag,
+  processLaneDrag,
+} from "../../api/kanban";
 
 const useStyles = makeStyles((theme) => ({
   board: {
@@ -44,7 +52,19 @@ export default function Dashboard(): JSX.Element {
   return (
     <Container maxWidth="lg">
       <Box className={styleClass.board}>
-        <Board draggable data={data} style={{ backgroundColor: "white" }}></Board>
+        <Board
+          draggable
+          canAddLanes
+          onCardAdd={processCardAdd}
+          onCardDelete={processCardDelete}
+          onLaneAdd={processLaneAdd}
+          onLaneDelete={processLaneDelete}
+          handleDragEnd={processCardDrag}
+          handleLaneDragEnd={processLaneDrag}
+          editable
+          data={data}
+          style={{ backgroundColor: "white" }}
+        ></Board>
       </Box>
       <Box mt={5}>
         <Footer />
