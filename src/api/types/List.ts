@@ -1,10 +1,10 @@
 import { EventData } from "./Event";
-import { Ref } from "./Common";
+import { BaseApiData } from "./Common";
 
-export interface ListData {
+export interface ListData extends BaseApiData {
   title: string;
   color?: string;
   description?: string;
   owner: string;
-  events?: Ref<EventData>;
+  events?: EventData[];
 }
