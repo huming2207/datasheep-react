@@ -1,8 +1,8 @@
+import { BaseApiReply } from "./Common"; // eslint-disable-line
 import { ListData } from "./List";
-import { BaseApiReply } from "./Common";
 
 interface RelatedProjectData {
-  lists: [ListData];
+  lists: ListData[];
 }
 
 export type RelatedProjectReply = BaseApiReply<RelatedProjectData>;
