@@ -21,5 +21,32 @@ interface MoveEventData {
   id: string;
 }
 
+interface DeleteEventData {
+  id: string;
+}
+
+interface ModifyEventData {
+  id: string;
+}
+
 export type CreateEventReply = BaseApiReply<CreateEventData>;
 export type MoveEventReply = BaseApiReply<MoveEventData>;
+export type DeleteEventReply = BaseApiReply<DeleteEventData>;
+export type ModifyEventReply = BaseApiReply<ModifyEventData>;
+
+export interface MoveEventInput {
+  cardId: string;
+  srcList: string;
+  dstList: string;
+  idx: number;
+}
+
+export interface CreateEventInput {
+  color?: number;
+  content?: string;
+  title: string;
+}
+
+export interface DeleteEventInput {
+  id: string;
+}
