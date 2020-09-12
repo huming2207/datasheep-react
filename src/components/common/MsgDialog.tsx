@@ -5,10 +5,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { useHistory } from "react-router";
 
 export interface MsgDialogData {
   title: string;
   content: string;
+  redirect?: string;
 }
 
 interface MsgDialogProps {
@@ -17,12 +19,17 @@ interface MsgDialogProps {
 
 export default function MsgDialog(props: MsgDialogProps): JSX.Element {
   const [msg, setMsg] = useState<MsgDialogData | null>(props.data);
+  const history = useHistory();
 
   useEffect(() => {
     setMsg(props.data);
   }, [props.data]);
 
   const handleClose = () => {
+    if (props.data?.redirect) {
+      history.push(props.data.redirect);
+    }
+
     setMsg(null);
   };
 
