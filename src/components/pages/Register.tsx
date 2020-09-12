@@ -46,6 +46,23 @@ export default function Register(): JSX.Element {
 
   const [msg, setMsg] = useState<MsgDialogData | null>(null);
 
+  const handleRegisterUser = async (form: RegFormInput): Promise<void> => {
+    try {
+      const result = await registerUser(form);
+      const data: MsgDialogData = {
+        title: "User created",
+        content: result.data.message || "Unknown state",
+      };
+      setMsg(data);
+    } catch (error) {
+      const data: MsgDialogData = {
+        title: "Failed when registering",
+        content: error.message || "Unknown error",
+      };
+      setMsg(data);
+    }
+  };
+
   return (
     <Container maxWidth="xs">
       <CssBaseline />
@@ -56,27 +73,7 @@ export default function Register(): JSX.Element {
         <Typography component="h1" variant="h5">
           Register new account
         </Typography>
-        <form
-          noValidate
-          className={classes.form}
-          onSubmit={handleSubmit(async (form) => {
-            try {
-              const result = await registerUser(form);
-              const data: MsgDialogData = {
-                title: "User created",
-                content: result.data.message || "Unknown state",
-              };
-              setMsg(data);
-            } catch (error) {
-              console.log("oops");
-              const data: MsgDialogData = {
-                title: "Failed when registering",
-                content: error.message || "Unknown error",
-              };
-              setMsg(data);
-            }
-          })}
-        >
+        <form noValidate className={classes.form} onSubmit={handleSubmit(handleRegisterUser)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
