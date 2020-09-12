@@ -18,6 +18,7 @@ import { yupResolver } from "@hookform/resolvers";
 import { LoginFormInput, LoginFormSchema } from "../../schemas/LoginForm";
 import { loginUser } from "../../api/auth";
 import MsgDialog, { MsgDialogData } from "../common/MsgDialog";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,7 +47,20 @@ export default function Login(): JSX.Element {
     resolver: yupResolver(LoginFormSchema),
   });
 
+  const history = useHistory();
   const [msg, setMsg] = useState<MsgDialogData | null>(null);
+  const handleLogin = async (form: LoginFormInput) => {
+    try {
+      await loginUser(form);
+      history.push("/dashboard");
+    } catch (error) {
+      const data: MsgDialogData = {
+        title: "Failed when logging in",
+        content: error.message || "Unknown error",
+      };
+      setMsg(data);
+    }
+  };
 
   return (
     <Container maxWidth="xs">
@@ -58,22 +72,7 @@ export default function Login(): JSX.Element {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form
-          className={classes.form}
-          noValidate
-          onSubmit={handleSubmit(async (form) => {
-            try {
-              await loginUser(form);
-            } catch (error) {
-              console.log("oops");
-              const data: MsgDialogData = {
-                title: "Failed when registering",
-                content: error.message || "Unknown error",
-              };
-              setMsg(data);
-            }
-          })}
-        >
+        <form className={classes.form} noValidate onSubmit={handleSubmit(handleLogin)}>
           <TextField
             variant="outlined"
             margin="normal"
