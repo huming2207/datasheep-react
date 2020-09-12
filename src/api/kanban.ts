@@ -29,7 +29,7 @@ export const fetchList = async (projectId: string): Promise<BoardData> => {
 
 export const dragCard = async (input: MoveEventInput): Promise<boolean> => {
   try {
-    const result = await axios.put(`/event/${input.cardId}/move`, input, loginWithJwt());
+    const result = await axios.put(`/event/${input.id}/move`, input, loginWithJwt());
     console.log(result);
   } catch (err) {
     console.error(err);
