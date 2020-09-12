@@ -35,7 +35,7 @@ export type DeleteEventReply = BaseApiReply<DeleteEventData>;
 export type ModifyEventReply = BaseApiReply<ModifyEventData>;
 
 export interface MoveEventInput {
-  cardId: string;
+  id: string;
   srcList: string;
   dstList: string;
   idx: number;
@@ -45,6 +45,7 @@ export interface CreateEventInput {
   color?: number;
   content?: string;
   title: string;
+  list: string;
 }
 
 export interface DeleteEventInput {
