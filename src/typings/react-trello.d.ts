@@ -67,7 +67,7 @@ declare module "react-trello" {
     onCardClick?: (cardId: string, metadata: any, laneId: string) => void;
     onBeforeCardDelete?: () => void;
     onCardDelete?: (cardId: string, laneId: string) => void;
-    onLaneAdd?: (lane: any) => void;
+    onLaneAdd?: (lane: LaneProps) => void;
     onLaneDelete?: (laneId: string) => void;
     onLaneClick?: (laneId: string) => void;
     onLaneScroll?: (page: number, laneId: string) => void;
