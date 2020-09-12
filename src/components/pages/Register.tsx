@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register(): JSX.Element {
   const classes = useStyles();
-
   const { register, handleSubmit, errors } = useForm<RegFormInput>({
     resolver: yupResolver(RegFormSchema),
   });
@@ -52,6 +51,7 @@ export default function Register(): JSX.Element {
       const data: MsgDialogData = {
         title: "User created",
         content: result.data.message || "Unknown state",
+        redirect: "/",
       };
       setMsg(data);
     } catch (error) {
