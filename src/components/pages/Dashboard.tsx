@@ -1,74 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../common/Footer";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
-import Board, { BoardData } from "react-trello";
-import { makeStyles } from "@material-ui/core";
-import {
-  processCardAdd,
-  processLaneAdd,
-  processCardDelete,
-  processLaneDelete,
-  processCardDrag,
-  processLaneDrag,
-} from "../../api/kanban";
-
-const useStyles = makeStyles((theme) => ({
-  board: {
-    fontFamily: "sans-serif",
-    backgroundColor: "white",
-  },
-}));
+import TopBar from "../common/TopBar";
+import Tabs from "@material-ui/core/Tabs/Tabs";
+import Tab from "@material-ui/core/Tab/Tab";
+import AppBar from "@material-ui/core/AppBar";
+import TabSection from "../common/TabSection";
+import BoardView from "../common/BoardView";
 
 export default function Dashboard(): JSX.Element {
-  const data: BoardData = {
-    lanes: [
-      {
-        id: "lane1",
-        title: "Planned Tasks",
-        label: "2/2",
-        cards: [
-          { id: "Card1", title: "Write Blog", description: "Can AI make memes", label: "30 mins", draggable: true },
-          {
-            id: "Card2",
-            title: "Pay Rent",
-            description: "Transfer via NEFT",
-            label: "5 mins",
-            metadata: { sha: "be312a1" },
-          },
-        ],
-      },
-      {
-        id: "lane2",
-        title: "Completed",
-        label: "0/0",
-        cards: [],
-      },
-    ],
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event: React.ChangeEvent<unknown>, newValue: number) => {
+    setValue(newValue);
   };
 
-  const styleClass = useStyles();
-
   return (
-    <Container maxWidth="lg">
-      <Box className={styleClass.board}>
-        <Board
-          draggable
-          canAddLanes
-          onCardAdd={processCardAdd}
-          onCardDelete={processCardDelete}
-          onLaneAdd={processLaneAdd}
-          onLaneDelete={processLaneDelete}
-          handleDragEnd={processCardDrag}
-          handleLaneDragEnd={processLaneDrag}
-          editable
-          data={data}
-          style={{ backgroundColor: "white" }}
-        ></Board>
-      </Box>
-      <Box mt={5}>
-        <Footer />
-      </Box>
-    </Container>
+    <React.Fragment>
+      <TopBar></TopBar>
+      <Container maxWidth="lg" style={{ marginTop: "30px" }}>
+        <AppBar position="static">
+          <Tabs value={value} onChange={handleChange} aria-label="dashboard tabs">
+            <Tab label="Board view" />
+            <Tab label="List view" />
+          </Tabs>
+        </AppBar>
+        <TabSection value={value} index={0}>
+          <BoardView></BoardView>
+        </TabSection>
+        <TabSection value={value} index={1}>
+          Item Two
+        </TabSection>
+        <Box mt={5}>
+          <Footer />
+        </Box>
+      </Container>
+    </React.Fragment>
   );
 }
